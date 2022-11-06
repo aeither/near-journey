@@ -28,7 +28,7 @@ const Editor: React.FC<Props> = (props) => {
 
   return (
     <div
-      className="w-1/2 h-full flex-grow-0 flex-shrink-0"
+      className="w-auto h-full flex-grow-0 flex-shrink-0"
       ref={refContainer}
     ></div>
   );

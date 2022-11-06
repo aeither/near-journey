@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import Editor from "@/components/cm-editor";
-import { Icons } from "@/components/icons";
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useState } from "react";
-import { CopyButton } from "@/components/copy-button";
+import Editor from "@/components/cm-editor"
+import { Icons } from "@/components/icons"
+import Image from "next/image"
+import Link from "next/link"
+import { useCallback, useState } from "react"
+import { CopyButton } from "@/components/copy-button"
 
 export default function IndexPage() {
-  const [doc, setDoc] = useState<string>("# Hello, World!\n");
+  const [doc, setDoc] = useState<string>("# Hello, World!\n")
   const handleDocChange = useCallback((newDoc: string) => {
-    setDoc(newDoc);
-  }, []);
+    setDoc(newDoc)
+  }, [])
 
   return (
     <section className="mx-auto grid max-w-[1100px] grid-cols-[1fr_380px] items-center gap-12 py-12">
@@ -38,8 +38,10 @@ export default function IndexPage() {
         alt="Next.js logo"
         priority
       />
-      <Editor initialDoc={doc} onChange={handleDocChange} />
+      <div>
+        <Editor initialDoc={doc} onChange={handleDocChange} />
+      </div>
       <CopyButton codeText={doc}>Copy</CopyButton>
     </section>
-  );
+  )
 }
