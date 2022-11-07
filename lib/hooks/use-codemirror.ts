@@ -1,12 +1,11 @@
-import { defaultKeymap } from "@codemirror/commands"
-import { markdown, markdownLanguage } from "@codemirror/lang-markdown"
-import { languages } from "@codemirror/language-data"
-import { EditorState } from "@codemirror/state"
+import { javascript } from "@codemirror/lang-javascript"
+import { Compartment, EditorState } from "@codemirror/state"
 import { oneDark } from "@codemirror/theme-one-dark"
-import { EditorView, keymap } from "@codemirror/view"
+import { EditorView } from "@codemirror/view"
 import { basicSetup } from "codemirror"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
+import { defaultExtensions } from "./extensions"
 
 interface Props {
   initialDoc: string
@@ -27,17 +26,15 @@ const useCodeMirror = <T extends Element>(props: Props): Return<T> => {
   useEffect(() => {
     if (!refContainer.current) return
 
+    // Create editor state
+    const languageCompartment = new Compartment()
     const startState = EditorState.create({
       doc: props.initialDoc,
       extensions: [
         basicSetup,
-        keymap.of(defaultKeymap),
-        markdown({
-          base: markdownLanguage,
-          codeLanguages: languages,
-          addKeymap: true,
-        }),
+        defaultExtensions(),
         oneDark,
+        languageCompartment.of([javascript({ typescript: false })]),
         EditorView.lineWrapping,
         EditorView.updateListener.of((update) => {
           if (update.changes) {
