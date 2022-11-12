@@ -5,6 +5,8 @@ import { Blog } from "@/lib/mdx/sources";
 import { MdxContent } from "@/components/mdx-content";
 import { formatDate } from "@/lib/utils";
 import Editor from "@/components/cm-editor";
+import Article from "@/components/article";
+import Editors from "@/components/editors";
 interface PostPageProps {
   params: {
     slug: string[];
@@ -31,28 +33,9 @@ export default async function PostPage({ params }: PostPageProps) {
   const mdx = await serialize(post.content);
 
   return (
-    <article className="mx-auto max-w-2xl py-12">
-      <div className="flex flex-col space-y-2">
-        <h1 className="max-w-[90%] text-4xl font-bold leading-normal">
-          {post.frontMatter.title}
-        </h1>
-        {post.frontMatter.date && (
-          <p className="text-sm text-slate-600">
-            {formatDate(post.frontMatter.date)}
-          </p>
-        )}
-      </div>
-      <hr className="my-6" />
-      <div className="flex flex-row w-full overflow-auto h-[-webkit-fill-available] max-h-full">
-        <>
-          {mdx && (
-            <div className="prose max-w-none">
-              <MdxContent source={mdx} />
-            </div>
-          )}
-        </>
-        <Editor initialDoc={"hello 123"} />
-      </div>
-    </article>
+    <div className="grid grid-cols-5 h-[calc(100vh-24px-32px-16px)]">
+      <Article title={post.frontMatter.title} mdx={mdx} />
+      <Editors />
+    </div>
   );
 }

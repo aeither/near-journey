@@ -21,7 +21,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
             </Link>
           </nav>
         </div>
-        <div>
+        <div className="px-4 py-2 bg-white hover:bg-white/80 text-neutral-dark rounded-full font-bold">
           <Link href="/">Connect Wallet</Link>
         </div>
       </header>
