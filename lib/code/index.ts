@@ -23,9 +23,9 @@ interface CodeFile {
 }
 
 interface CodeFileData {
-  raw: string
-  hash: string
   content: string
+  answer: string
+  hash: string
 }
 
 export function createSource<T extends z.ZodType>(source: Source<T>) {
@@ -55,20 +55,23 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
   }
 
   async function getFileData(file: CodeFile): Promise<CodeFileData> {
-    const raw = await fs.readFile(file.filepath, "utf-8")
+    const content = await fs.readFile(file.filepath, "utf-8")
+    const answer = await fs.readFile(
+      `${file.filepath.slice(0, -3)}-answer.js`,
+      "utf-8"
+    )
 
-    const hash = hasha(raw.toString())
+    const hash = hasha(content.toString())
 
     const cachedContent = codeCache.get<CodeFileData>(hash)
     if (cachedContent?.hash === hash) {
       return cachedContent
     }
 
-    const vfile = new VFile({ value: raw })
     const fileData = {
-      raw,
+      content,
+      answer,
       hash,
-      content: String(vfile.value),
     }
 
     codeCache.set(hash, fileData)

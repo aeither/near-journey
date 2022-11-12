@@ -1,5 +1,3 @@
-const main = () => {
-  console.log("hello world")
-}
+const main = () => {}
 
 main()

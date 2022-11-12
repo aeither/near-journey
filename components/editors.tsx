@@ -4,7 +4,7 @@ import REditor from "@/components/r-editor"
 import React, { useState } from "react"
 
 interface EditorsArgs {
-  raw?: string
+  answer?: string
   hash?: string
   content?: string
   filepath?: string
@@ -12,7 +12,7 @@ interface EditorsArgs {
   url?: string
 }
 
-const Editors: React.FC<EditorsArgs> = ({ content }) => {
+const Editors: React.FC<EditorsArgs> = ({ content, answer }) => {
   const [isAnswer, setIsAnswer] = useState(false)
 
   return (
@@ -36,7 +36,7 @@ const Editors: React.FC<EditorsArgs> = ({ content }) => {
         {isAnswer ? (
           <REditor initialDoc={"Answer hidden"} />
         ) : (
-          <REditor initialDoc={"This is the answer"} />
+          <REditor initialDoc={answer} />
         )}
       </div>
     </div>
