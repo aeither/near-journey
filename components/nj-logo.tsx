@@ -8,7 +8,7 @@ export const NJLogo = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <g clip-path="url(#clip0_8_25)">
+      <g clipPath="url(#clip0_8_25)">
         <rect width="512" height="512" fill="#202323" />
         <circle cx="256" cy="256" r="256" fill="#202323" />
         <rect x="95" y="70" width="417" height="371" fill="url(#pattern0)" />

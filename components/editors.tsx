@@ -10,7 +10,7 @@ const Editors: React.FC = () => {
     <div className="flex col-span-3 flex-col h-full w-full">
       <REditor initialDoc={""} />
       <div className="w-full h-full py-4 items-center">
-        <div className=" mb-4 ml-4">
+        <div className="mb-4 ml-4">
           <button
             onClick={() => {
               if (isAnswer) {

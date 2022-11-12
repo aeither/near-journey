@@ -1,12 +1,9 @@
-import { notFound } from "next/navigation";
 import { serialize } from "next-mdx-remote/serialize";
+import { notFound } from "next/navigation";
 
-import { Blog } from "@/lib/mdx/sources";
-import { MdxContent } from "@/components/mdx-content";
-import { formatDate } from "@/lib/utils";
-import Editor from "@/components/cm-editor";
 import Article from "@/components/article";
 import Editors from "@/components/editors";
+import { Blog } from "@/lib/mdx/sources";
 interface PostPageProps {
   params: {
     slug: string[];

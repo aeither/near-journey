@@ -1,10 +1,9 @@
+import glob from "fast-glob"
 import { promises as fs } from "fs"
 import hasha from "hasha"
-import glob from "fast-glob"
-import path from "path"
 import NodeCache from "node-cache"
+import path from "path"
 import { VFile } from "vfile"
-import { matter } from "vfile-matter"
 import * as z from "zod"
 
 const mdxCache = new NodeCache()
@@ -57,11 +56,6 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
 
   async function getFileData(file: MdxFile): Promise<MdxFileData<z.infer<T>>> {
     const raw = await fs.readFile(file.filepath, "utf-8")
-    // const main = () => {
-    //   console.log("hello world")
-    // }
-
-    // main()
 
     const hash = hasha(raw.toString())
 
@@ -71,14 +65,6 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
     }
 
     const vfile = new VFile({ value: raw })
-    // vfile: {
-    //   data: {},
-    //   messages: [],
-    //   history: [],
-    //   cwd: '/Users/lin/Documents/Projects/near-journey',
-    //   value: 'const main = () => {\n  console.log("hello world")\n}\n\nmain()\n'
-    // }
-
     const fileData = {
       raw,
       hash,
@@ -92,8 +78,10 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
 
   async function getMdxNode(slug: string | string[]) {
     const _slug = Array.isArray(slug) ? slug.join("/") : slug
+    console.log("🚀 ~ file: index.ts ~ line 81 ~ getMdxNode ~ _slug", _slug)
 
     const files = await getMdxFiles()
+    console.log("🚀 ~ file: index.ts ~ line 83 ~ getMdxNode ~ files", files)
 
     if (!files?.length) return null
 
@@ -110,16 +98,7 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
   }
 
   async function getAllMdxNodes() {
-    console.log("getAllCodeNodes")
-
     const files = await getMdxFiles()
-    // files: [
-    //   {
-    //     filepath: 'content/snippets/example.js',
-    //     slug: 'example',
-    //     url: '/blog/example'
-    //   }
-    // ]
 
     if (!files.length) return []
 

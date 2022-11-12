@@ -7,7 +7,6 @@ import Link from "next/link"
 
 export default async function IndexPage() {
   const posts = await Blog.getAllMdxNodes()
-  console.log("🚀 ~ file: page.tsx ~ line 10 ~ IndexPage ~ posts", posts)
 
   return (
     <section className="mx-auto grid max-w-[1100px] grid-cols-[1fr_380px] items-center gap-12 py-12">
