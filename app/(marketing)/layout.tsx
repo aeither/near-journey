@@ -1,8 +1,8 @@
-import { Icons } from "@/components/icons"
-import Link from "next/link"
+import { Icons } from "@/components/icons";
+import Link from "next/link";
 
 interface MarketingLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
@@ -21,10 +21,10 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
           </nav>
         </div>
         <div>
-          <Link href="/login" >Login</Link>
+          <Link href="/">Connect Wallet</Link>
         </div>
       </header>
       <main>{children}</main>
     </div>
-  )
+  );
 }
