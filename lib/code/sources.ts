@@ -1,7 +1,7 @@
-import * as z from "zod";
-import { createSource } from ".";
+import * as z from "zod"
+import { createSource } from "."
 
-export const Blog = createSource({
+export const Code = createSource({
   contentPath: "content/snippets",
   basePath: "/blog",
   sortBy: "date",
@@ -11,4 +11,4 @@ export const Blog = createSource({
     date: z.string(),
     excerpt: z.string().optional(),
   }),
-});
+})

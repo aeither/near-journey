@@ -6,7 +6,7 @@ import path from "path"
 import { VFile } from "vfile"
 import * as z from "zod"
 
-const mdxCache = new NodeCache()
+const codeCache = new NodeCache()
 
 export interface Source<T> {
   contentPath: string
@@ -16,13 +16,13 @@ export interface Source<T> {
   frontMatter: T
 }
 
-interface MdxFile {
+interface CodeFile {
   filepath: string
   slug: string
   url: string
 }
 
-interface MdxFileData<TFrontmatter> {
+interface CodeFileData {
   raw: string
   hash: string
   content: string
@@ -31,7 +31,7 @@ interface MdxFileData<TFrontmatter> {
 export function createSource<T extends z.ZodType>(source: Source<T>) {
   const { contentPath, basePath, sortBy, sortOrder } = source
 
-  async function getMdxFiles() {
+  async function getCodeFiles() {
     // contentPath = content/snippets
     const files = await glob(`${contentPath}/**/*.{js,ts}`)
     // files: [ 'content/snippets/example.js' ]
@@ -54,12 +54,12 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
     })
   }
 
-  async function getFileData(file: MdxFile): Promise<MdxFileData<z.infer<T>>> {
+  async function getFileData(file: CodeFile): Promise<CodeFileData> {
     const raw = await fs.readFile(file.filepath, "utf-8")
 
     const hash = hasha(raw.toString())
 
-    const cachedContent = mdxCache.get<MdxFileData<z.infer<T>>>(hash)
+    const cachedContent = codeCache.get<CodeFileData>(hash)
     if (cachedContent?.hash === hash) {
       return cachedContent
     }
@@ -71,16 +71,16 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
       content: String(vfile.value),
     }
 
-    mdxCache.set(hash, fileData)
+    codeCache.set(hash, fileData)
 
     return fileData
   }
 
-  async function getMdxNode(slug: string | string[]) {
+  async function getCodeNode(slug: string | string[]) {
     const _slug = Array.isArray(slug) ? slug.join("/") : slug
     console.log("🚀 ~ file: index.ts ~ line 81 ~ getMdxNode ~ _slug", _slug)
 
-    const files = await getMdxFiles()
+    const files = await getCodeFiles()
     console.log("🚀 ~ file: index.ts ~ line 83 ~ getMdxNode ~ files", files)
 
     if (!files?.length) return null
@@ -90,6 +90,7 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
     if (!file) return null
 
     const data = await getFileData(file)
+    console.log("🚀 ~ file: index.ts ~ line 93 ~ getMdxNode ~ data", data)
 
     return {
       ...file,
@@ -97,14 +98,14 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
     }
   }
 
-  async function getAllMdxNodes() {
-    const files = await getMdxFiles()
+  async function getAllCodeNodes() {
+    const files = await getCodeFiles()
 
     if (!files.length) return []
 
     const nodes = await Promise.all(
       files.map(async (file) => {
-        return await getMdxNode(file.slug)
+        return await getCodeNode(file.slug)
       })
     )
 
@@ -112,9 +113,9 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
   }
 
   return {
-    getMdxFiles,
+    getCodeFiles,
     getFileData,
-    getMdxNode,
-    getAllMdxNodes,
+    getCodeNode,
+    getAllCodeNodes,
   }
 }

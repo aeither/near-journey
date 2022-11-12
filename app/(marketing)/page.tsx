@@ -1,6 +1,6 @@
 import Editor from "@/components/cm-editor"
 import { Icons } from "@/components/icons"
-import { Blog } from "@/lib/code/sources"
+import { Blog } from "@/lib/mdx/sources"
 import { formatDate } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
