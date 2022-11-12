@@ -4,9 +4,9 @@ import REditor from "@/components/r-editor"
 import React, { useState } from "react"
 
 interface EditorsArgs {
-  answer?: string
+  answer: string
   hash?: string
-  content?: string
+  content: string
   filepath?: string
   slug?: string
   url?: string

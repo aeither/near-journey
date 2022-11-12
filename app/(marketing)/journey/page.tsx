@@ -1,12 +1,6 @@
-import Article from "@/components/article"
 import Editors from "@/components/editors"
 import { Code } from "@/lib/code/sources"
 import { notFound } from "next/navigation"
-import { serialize } from "next-mdx-remote/serialize"
-
-import { MdxContent } from "@/components/mdx-content"
-import { formatDate } from "@/lib/utils"
-import Editor from "@/components/cm-editor"
 
 export default async function PostPage() {
   const code = await Code.getCodeNode("journey")
