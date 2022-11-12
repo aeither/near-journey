@@ -21,7 +21,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
           </nav>
         </div>
         <div>
-          <Link href="/login">Login</Link>
+          <Link href="/login" >Login</Link>
         </div>
       </header>
       <main>{children}</main>

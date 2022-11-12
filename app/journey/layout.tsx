@@ -1,17 +1,24 @@
-import { Icons } from "@/components/icons"
-import Link from "next/link"
+import { Icons } from "@/components/icons";
+import Link from "next/link";
+import Image from "next/image";
 
 interface MarketingLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
     <div className="mx-auto w-full px-4">
       <header className="mx-auto flex max-w-[1440px] items-center justify-between py-4">
-        <div className="flex gap-10">
+        <div className="flex gap-10 items-center">
           <Link href="/" className="flex items-center space-x-2">
-            <Icons.logo />
+            <Image
+              src="/images/nearjourneylogo.png"
+              width={30}
+              height={30}
+              alt="Next.js logo"
+              priority
+            />
             <span className="font-bold">Near Journey</span>
           </Link>
           <nav>
@@ -26,5 +33,5 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
       </header>
       <main>{children}</main>
     </div>
-  )
+  );
 }
