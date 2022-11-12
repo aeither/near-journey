@@ -1,4 +1,4 @@
-const { colors } = require("tailwindcss/colors")
+const { colors } = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,6 +7,11 @@ module.exports = {
     extend: {
       colors: {
         ...colors,
+        white: "#F5F5F5",
+        accent: "#63A2DC",
+        "neutral-light": "#3C4142",
+        "neutral-mid": "#2A2B2C",
+        "neutral-dark": "#202323",
         brand: {
           50: "#f3f3f3",
           100: "#e7e7e7",
@@ -23,5 +28,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-}
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    require("prettier-plugin-tailwindcss"),
+  ],
+};

@@ -1,17 +1,13 @@
-"use client"
-
 import Editor from "@/components/cm-editor"
 import { Icons } from "@/components/icons"
+import { Blog } from "@/lib/code/sources"
+import { formatDate } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
-import { useCallback, useState } from "react"
-import { CopyButton } from "@/components/copy-button"
 
-export default function IndexPage() {
-  const [doc, setDoc] = useState<string>("# Hello, World!\n")
-  const handleDocChange = useCallback((newDoc: string) => {
-    setDoc(newDoc)
-  }, [])
+export default async function IndexPage() {
+  const posts = await Blog.getAllMdxNodes()
+  console.log("🚀 ~ file: page.tsx ~ line 10 ~ IndexPage ~ posts", posts)
 
   return (
     <section className="mx-auto grid max-w-[1100px] grid-cols-[1fr_380px] items-center gap-12 py-12">
@@ -38,10 +34,15 @@ export default function IndexPage() {
         alt="Next.js logo"
         priority
       />
-      <div>
-        <Editor initialDoc={doc} onChange={handleDocChange} />
-      </div>
-      <CopyButton codeText={doc}>Copy</CopyButton>
+      {posts.map((post) => (
+        <article key={post.slug} className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2">{post.content}</div>
+          <Editor initialDoc={post.raw} />
+        </article>
+      ))}
+
+      <Editor initialDoc={"hello 123"} />
+      {/* <button onClick={getData}>getData</button> */}
     </section>
   )
 }
