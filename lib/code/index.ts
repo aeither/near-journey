@@ -81,10 +81,8 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
 
   async function getCodeNode(slug: string | string[]) {
     const _slug = Array.isArray(slug) ? slug.join("/") : slug
-    console.log("🚀 ~ file: index.ts ~ line 81 ~ getMdxNode ~ _slug", _slug)
 
     const files = await getCodeFiles()
-    console.log("🚀 ~ file: index.ts ~ line 83 ~ getMdxNode ~ files", files)
 
     if (!files?.length) return null
 
@@ -93,7 +91,6 @@ export function createSource<T extends z.ZodType>(source: Source<T>) {
     if (!file) return null
 
     const data = await getFileData(file)
-    console.log("🚀 ~ file: index.ts ~ line 93 ~ getMdxNode ~ data", data)
 
     return {
       ...file,

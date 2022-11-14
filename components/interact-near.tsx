@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
 import { Wallet } from "@/lib/near/wallet"
+import { useEffect, useMemo, useState } from "react"
 
 export default function InteractNear() {
   const CONTRACT_ADDRESS = "dev-1667568912500-87724948574387"
