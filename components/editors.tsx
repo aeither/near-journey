@@ -34,9 +34,9 @@ const Editors: React.FC<EditorsArgs> = ({ content, answer }) => {
           </button>
         </div>
         {isAnswer ? (
-          <REditor initialDoc={"Answer hidden"} />
-        ) : (
           <REditor initialDoc={answer} />
+        ) : (
+          <REditor initialDoc={"Answer hidden"} />
         )}
       </div>
     </div>
