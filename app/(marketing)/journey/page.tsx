@@ -12,7 +12,7 @@ export default async function PostPage() {
 
   return (
     <div className="grid grid-cols-5 h-[calc(100vh-24px-32px-8px)]">
-      <InteractNear />
+      {/* <InteractNear /> */}
       <Editors content={code.content} answer={code.answer} />
     </div>
   )
