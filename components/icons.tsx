@@ -14,6 +14,7 @@ import {
   Settings,
   Trash,
   User,
+  Book,
 } from "lucide-react"
 import type { Icon as LucideIcon } from "lucide-react"
 
@@ -35,4 +36,5 @@ export const Icons = {
   arrowRight: ArrowRight,
   help: HelpCircle,
   pizza: Pizza,
+  book: Book,
 }

@@ -29,7 +29,7 @@ Popover.Content = React.forwardRef<
       ref={ref}
       align="end"
       className={cn(
-        "overflow-hidden rounded-md border border-slate-50 bg-white shadow-md animate-in slide-in-from-top-1",
+        "overflow-hidden rounded-md border border-neutral-light bg-white shadow-md animate-in slide-in-from-top-1",
         className
       )}
       {...props}
