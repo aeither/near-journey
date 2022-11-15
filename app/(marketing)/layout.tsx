@@ -1,9 +1,10 @@
-import { Icons } from "@/components/icons";
-import { NJLogo } from "@/components/nj-logo";
-import Link from "next/link";
+import { Icons } from "@/components/icons"
+import { NJLogo } from "@/components/nj-logo"
+import PresenceCounter from "@/components/presence-counter"
+import Link from "next/link"
 
 interface MarketingLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
@@ -20,12 +21,15 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
               Blog
             </Link>
           </nav>
-        </div>
-        <div className="px-4 py-2 bg-white hover:bg-white/80 text-neutral-dark rounded-full font-bold">
-          <Link href="/">Connect Wallet</Link>
+      </div>
+        <div className="flex items-center gap-4">
+          <PresenceCounter />
+          <div className="px-4 py-2 bg-white hover:bg-white/80 text-neutral-dark rounded-full font-bold">
+            <Link href="/">Connect Wallet</Link>
+          </div>
         </div>
       </header>
       <main>{children}</main>
     </div>
-  );
+  )
 }

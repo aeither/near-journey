@@ -5,6 +5,7 @@ import Article from "@/components/article"
 import Editors from "@/components/editors"
 import { Blog } from "@/lib/mdx/sources"
 import { Code } from "@/lib/code/sources"
+import LiveWrapper from "@/components/live-wrapper"
 interface PostPageProps {
   params: {
     slug: string[]
@@ -32,9 +33,11 @@ export default async function PostPage({ params }: PostPageProps) {
   const mdx = await serialize(post.content)
 
   return (
-    <div className="grid grid-cols-5 h-[calc(100vh-24px-32px-16px)]">
-      <Article title={post.frontMatter.title} mdx={mdx} />
-      <Editors content={code.content} answer={code.answer} />
-    </div>
+    <LiveWrapper>
+      <div className="grid grid-cols-5 h-[calc(100vh-24px-32px-16px)]">
+        <Article title={post.frontMatter.title} mdx={mdx} />
+        <Editors content={code.content} answer={code.answer} />
+      </div>
+    </LiveWrapper>
   )
 }
