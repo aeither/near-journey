@@ -6,8 +6,6 @@ import { providers } from "near-api-js"
 // wallet selector UI
 import "@near-wallet-selector/modal-ui/styles.css"
 import { setupModal } from "@near-wallet-selector/modal-ui"
-import MyNearIconUrl from "@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png"
-import NearIconUrl from "@near-wallet-selector/near-wallet/assets/near-wallet-icon.png"
 
 // wallet selector options
 import { setupWalletSelector } from "@near-wallet-selector/core"
@@ -38,10 +36,7 @@ export class Wallet {
   async startUp(): Promise<boolean> {
     this.walletSelector = await setupWalletSelector({
       network: this.network,
-      modules: [
-        setupMyNearWallet({ iconUrl: MyNearIconUrl.src }),
-        setupNearWallet({ iconUrl: NearIconUrl.src }),
-      ],
+      modules: [setupMyNearWallet(), setupNearWallet()],
     })
 
     const isSignedIn = this.walletSelector.isSignedIn()
