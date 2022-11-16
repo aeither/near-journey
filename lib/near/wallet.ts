@@ -1,7 +1,7 @@
 /* A helper file that simplifies using the wallet selector */
 
 // near api js
-import { providers } from "near-api-js"
+import { providers, utils } from "near-api-js"
 
 // wallet selector UI
 import "@near-wallet-selector/modal-ui/styles.css"
@@ -95,6 +95,7 @@ export class Wallet {
     gas = THIRTY_TGAS,
     deposit = NO_DEPOSIT,
   }) {
+    const amount = utils.format.parseNearAmount(deposit)
     // Sign a transaction with the "FunctionCall" action
     const outcome = await this.wallet.signAndSendTransaction({
       signerId: this.accountId,
@@ -106,7 +107,7 @@ export class Wallet {
             methodName: method,
             args,
             gas,
-            deposit,
+            deposit: amount,
           },
         },
       ],

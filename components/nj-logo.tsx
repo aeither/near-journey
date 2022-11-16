@@ -41,8 +41,8 @@ export const NJLogo = () => {
           y2="712.903"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.725046" stop-color="#202323" />
-          <stop offset="1" stop-color="#202323" stop-opacity="0" />
+          <stop offset="0.725046" stopColor="#202323" />
+          <stop offset="1" stopColor="#202323" stopOpacity="0" />
         </linearGradient>
         <clipPath id="clip0_8_25">
           <rect width="512" height="512" fill="white" />
@@ -55,5 +55,5 @@ export const NJLogo = () => {
         />
       </defs>
     </svg>
-  );
-};
+  )
+}
