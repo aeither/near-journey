@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         "hero-bg": "url('/svgs/nj-gradient-bg.svg')",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       colors: {
         ...colors,
