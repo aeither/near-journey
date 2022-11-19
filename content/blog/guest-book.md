@@ -79,19 +79,30 @@ Now that you understand what the dApp does, let us take a closer look to its str
 ### Contract
 The contract presents 2 methods: `add_message` and `get_message`.
 
-<CodeTabs>
-  <Language value="🌐 JavaScript" language="ts">
-    <Github fname="contract.ts" 
-            url="https://github.com/near-examples/guest-book-js/blob/master/contract/src/contract.ts"
-            start="4" end="24" />
-  </Language>
-  <Language value="🦀 Rust" language="rust">
-    <Github fname="lib.rs"
-            url="https://github.com/near-examples/guest-book-rust/blob/main/contract/src/lib.rs"
-            start="30" end="53" />
-  </Language>
-  
-</CodeTabs>
+```rust
+#[near_bindgen]
+impl GuestBook {
+
+  #[payable]
+  pub fn add_message(&mut self, text: String) {
+    // If the user attaches more than 0.01N the message is premium
+    let premium = env::attached_deposit() >= POINT_ONE;
+    let sender = env::predecessor_account_id();
+
+    let message = PostedMessage{premium, sender, text};
+    self.messages.push(&message);
+  }
+
+  pub fn get_messages(&self, from_index:Option<U128>, limit:Option<u64>) -> Vec<PostedMessage>{
+    let from = u128::from(from_index.unwrap_or(U128(0)));
+
+    self.messages.iter()
+    .skip(from as usize)
+    .take(limit.unwrap_or(10) as usize)
+    .collect()
+  }
+}
+```
 
 ### Frontend
 The frontend is composed by a single HTML file (`/index.html`) and uses REACT. Check `/App.js` and `/index.js` to understand how
@@ -99,13 +110,19 @@ components are displayed in the screen.
 
 You will notice in `/assets/js/index.js` the following code:
 
-<CodeTabs>
-  <Language value="🌐 JavaScript" language="js">
-    <Github fname="index.js"
-            url="https://github.com/near-examples/guest-book-rust/blob/main/frontend/index.js"
-            start="15" end="25" />
-  </Language>
-</CodeTabs>
+```js
+const guestBook = new GuestBook({ contractId: process.env.CONTRACT_NAME, walletToUse: wallet });
+
+// Setup on page load
+window.onload = async () => {
+  const isSignedIn = await wallet.startUp()
+ 
+  ReactDOM.render(
+    <App isSignedIn={isSignedIn} guestBook={guestBook} wallet={wallet} />,
+    document.getElementById('root')
+  );
+}
+```
 
 It setups the necessary variables and starts the app.
 
@@ -122,22 +139,30 @@ go ahead and perform the tests present in the dApp through the command `yarn tes
 
 Unit tests check individual functions in the smart contract. Right now only rust implements unit testing. 
 
-<CodeTabs>
-  <Language value="🦀 Rust" language="rust">
-    <Github fname="lib.rs"
-            url="https://github.com/near-examples/guest-book-rust/blob/main/contract/src/lib.rs"
-            start="63" end="86" />
-  </Language>
-</CodeTabs>
+```rust
+#[test]
+fn add_message() {
+  let mut contract = GuestBook::default();
+  contract.add_message("A message".to_string());
 
-### Integration test
+  let posted_message = &contract.get_messages(None, None)[0];
+  assert_eq!(posted_message.premium, false);
+  assert_eq!(posted_message.text, "A message".to_string());
+}
 
-Integration tests are generally written in JavaScript. They automatically deploy your contract and execute methods on it. In this way, integration tests simulate interactions between the contract and the users in a realistic scenario. You will find the integration tests for `hello-near` in `integration-tests/`.
+#[test]
+fn iters_messages() {
+  let mut contract = GuestBook::default();
+  contract.add_message("1st message".to_string());
+  contract.add_message("2nd message".to_string());
+  contract.add_message("3rd message".to_string());
+  
+  let messages = &contract.get_messages(None, None);
+  assert!(messages.len() == 3);
 
-<CodeTabs>
-  <Language value="🌐 JavaScript" language="js">
-    <Github fname="main.ava.ts"
-            url="https://github.com/near-examples/guest-book-js/blob/master/integration-tests/src/main.ava.ts"
-            start="39" end="59" />
-  </Language>
-</CodeTabs>
+  let last_message = &contract.get_messages(Some(U128::from(1)), Some(2))[1];
+  assert_eq!(last_message.premium, false);
+  assert_eq!(last_message.text, "3rd message".to_string());
+}
+```
+

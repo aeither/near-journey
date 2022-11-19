@@ -62,26 +62,59 @@ Now that you understand what the dApp does, let us take a closer look to its str
 ### Contract
 The contract presents 2 methods: `flip_coin`, and `points_of`.
 
-<CodeTabs>
-  <Language value="🌐 JavaScript" language="ts">
-    <Github fname="contract.ts" 
-            url="https://github.com/near-examples/coin-flip-workshop-js/blob/main/contract/src/contract.ts"
-            start="22" end="55" />
-  </Language>
-</CodeTabs>
+```js
+@call({})
+flip_coin({ player_guess }: { player_guess: Side }): Side {
+  // Check who called the method
+  const player: AccountId = near.predecessorAccountId();
+  near.log(`${player} chose ${player_guess}`);
+
+  // Simulate a Coin Flip
+  const outcome = simulateCoinFlip();
+
+  // Get the current player points
+  let player_points: number = this.points.get(player, { defaultValue: 0 })
+
+  // Check if their guess was right and modify the points accordingly
+  if (player_guess == outcome) {
+    near.log(`The result was ${outcome}, you get a point!`);
+    player_points += 1;
+  } else {
+    near.log(`The result was ${outcome}, you lost a point`);
+    player_points = player_points ? player_points - 1 : 0;
+  }
+
+  // Store the new points
+  this.points.set(player, player_points)
+
+  return outcome
+}
+
+// View how many points a specific player has
+@view({})
+points_of({ player }: { player: AccountId }): number {
+  const points = this.points.get(player, {defaultValue: 0})
+  near.log(`Points for ${player}: ${points}`)
+  return points
+}
+```
 
 ### Frontend
 The frontend is composed by a single HTML file (`/index.html`). This file defines the components displayed in the screen.
 
 The website's logic lives in `/assets/js/index.js`, which communicates with the contract through a `wallet`. You will notice in `/assets/js/index.js` the following code:
 
-<CodeTabs>
-  <Language value="🌐 JavaScript" language="ts">
-    <Github fname="index.js"
-            url="https://github.com/near-examples/coin-flip-workshop-js/blob/main/frontend/index.js"
-            start="10" end="19" />            
-  </Language>
-</CodeTabs>
+```js
+window.onload = async () => {
+  let isSignedIn = await wallet.startUp();
+
+  if (isSignedIn) {
+    signedInFlow();
+  } else {
+    signedOutFlow();
+  }
+};
+```
 
 It indicates our app, when it starts, to check if the user is already logged in and execute either `signedInFlow()` or `signedOutFlow()`.
 
@@ -100,13 +133,33 @@ contract and execute methods on it. In this way, integration tests simulate inte
 from users in a realistic scenario. You will find the integration tests for the `counter`
 in `tests/integration-tests`.
 
-<CodeTabs>
-  <Language value="🌐 JavaScript" language="ts">
-    <Github fname="main.test.js"
-            url="https://github.com/near-examples/coin-flip-workshop-js/blob/main/integration-tests/src/main.ava.ts"
-            start="32" end="56" />
-  </Language>
-</CodeTabs>
+```js
+test('by default the user has no points', async (t) => {
+  const { root, contract } = t.context.accounts;
+  const points: number = await contract.view('points_of', { player: root.accountId });
+  t.is(points, 0);
+});
+
+test('the points are correctly computed', async (t) => {
+  const { root, contract } = t.context.accounts;
+
+  let counter: {[key:string]:number} = { 'heads': 0, 'tails': 0 }
+  let expected_points = 0;
+
+  for(let i=0; i<10; i++){
+    const res = await root.call(contract, 'flip_coin', { 'player_guess': 'heads' })
+    counter[res as string] += 1;
+    expected_points += res == 'heads' ? 1 : -1;
+    expected_points = Math.max(expected_points, 0);
+  }
+
+  // A binomial(10, 1/2) has a P(x>2) ~ 0.98%
+  t.true(counter['heads'] >= 2);
+
+  const points: number = await contract.view('points_of', { 'player': root.accountId });
+  t.is(points, expected_points);
+});
+```
 
 ---
 

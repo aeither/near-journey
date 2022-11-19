@@ -28,7 +28,9 @@ export function useNear() {
     return Math.random() * (max - min) + min
   }
 
-  const mintNFT = async () => {
+  const mintNFT = async (title: string) => {
+
+    
     const MEDIA = [
       "https://bafybeibdack2fgzxt54zvu5vncd6pvl4tlzj6vf7odqtodsa6vgucmrkia.ipfs.nftstorage.link/",
       "https://bafybeifirgr4cvvkx66xp7rz3j3wkk6owzcsxkjw4f2lblcjgkdfakk57u.ipfs.nftstorage.link/",
@@ -45,8 +47,8 @@ export function useNear() {
         token_id: nanoid(),
         receiver_id: wallet.accountId,
         metadata: {
-          title: "Near Journey",
-          description: "Collect them all!",
+          title: `Near Journey: ${title}`,
+          description: `Attestation for completing ${title}`,
           media: media,
           copies: 1,
         },

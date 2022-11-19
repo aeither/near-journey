@@ -73,6 +73,8 @@ export class Wallet {
 
   // Make a read-only call to retrieve information from the network
   async viewMethod({ contractId, method, args = {} }) {
+    if (this.walletSelector === undefined) await this.startUp()
+
     const { network } = this.walletSelector.options
     const provider = new providers.JsonRpcProvider({ url: network.nodeUrl })
 
@@ -99,6 +101,8 @@ export class Wallet {
     gas = THIRTY_TGAS,
     deposit = NO_DEPOSIT,
   }) {
+    if (this.wallet === undefined) await this.startUp()
+
     const amount = utils.format.parseNearAmount(deposit)
     // Sign a transaction with the "FunctionCall" action
     const outcome = await this.wallet.signAndSendTransaction({
