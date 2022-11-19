@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react"
 import { nanoid } from "nanoid"
 
 export function useNear() {
-  const NJ_RELIC_ADDRESS = "relic.testnet"
+  const NJ_RELIC_ADDRESS = "nft.examples.testnet"
 
   const [isSigned, setIsSigned] = useState(false)
   const wallet = useMemo(
@@ -46,7 +46,7 @@ export function useNear() {
       args: {
         token_id: nanoid(),
         receiver_id: wallet.accountId,
-        token_metadata: {
+        metadata: {
           title: `Near Journey: ${title}`,
           description: `Attestation for completing ${title}`,
           media: media,
