@@ -18,7 +18,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
           </Link>
           <nav>
             <Link href="/blog" className="hover:underline">
-              Blog
+              Courses
             </Link>
           </nav>
         </div>
