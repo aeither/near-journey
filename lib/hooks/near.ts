@@ -25,10 +25,12 @@ export function useNear() {
   }, [wallet])
 
   function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min
+    return Math.round(Math.random() * (max - min) + min)
   }
 
   const mintNFT = async (title: string) => {
+    if (wallet.accountId === undefined) await wallet.startUp()
+
     const MEDIA = [
       "https://bafybeibdack2fgzxt54zvu5vncd6pvl4tlzj6vf7odqtodsa6vgucmrkia.ipfs.nftstorage.link/",
       "https://bafybeifirgr4cvvkx66xp7rz3j3wkk6owzcsxkjw4f2lblcjgkdfakk57u.ipfs.nftstorage.link/",
@@ -44,7 +46,7 @@ export function useNear() {
       args: {
         token_id: nanoid(),
         receiver_id: wallet.accountId,
-        metadata: {
+        token_metadata: {
           title: `Near Journey: ${title}`,
           description: `Attestation for completing ${title}`,
           media: media,
