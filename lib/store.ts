@@ -21,7 +21,7 @@ const client = createClient({
 const useStore = create<WithLiveblocks<State>>()(
   liveblocks(
     (set) => ({
-      code: "Hello World",
+      code: "Loading...",
       cursor: { x: 0, y: 0 },
       setCursor: (cursor) => set({ cursor }),
       setCode: (code) => set({ code }),

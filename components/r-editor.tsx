@@ -16,7 +16,6 @@ const Editor: React.FC<Props> = (props) => {
 
   const onChange = useCallback((value, viewUpdate) => {
     if (isLiveEdit) setCode(value)
-    console.log("value:", value)
   }, [])
 
   return (
