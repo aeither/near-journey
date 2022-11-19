@@ -54,6 +54,7 @@
     "clsx": "^1.2.1",
     "codemirror": "^6.0.1",
     "dotenv": "^16.0.3",
+    "encoding": "^0.1.13",
     "fast-glob": "^3.2.12",
     "hasha": "^5.2.2",
     "lucide-react": "^0.92.0",
