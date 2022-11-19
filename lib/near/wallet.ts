@@ -51,7 +51,9 @@ export class Wallet {
   }
 
   // Sign-in method
-  signIn() {
+  async signIn() {
+    if (this.wallet === undefined) await this.startUp()
+
     const description = "Please select a wallet to sign in."
     const modal = setupModal(this.walletSelector, {
       contractId: this.createAccessKeyFor,
@@ -61,7 +63,9 @@ export class Wallet {
   }
 
   // Sign-out method
-  signOut() {
+  async signOut() {
+    if (this.wallet === undefined) await this.startUp()
+
     this.wallet.signOut()
     this.wallet = this.accountId = this.createAccessKeyFor = null
     window.location.replace(window.location.origin + window.location.pathname)

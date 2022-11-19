@@ -1,4 +1,4 @@
-import { Icons } from "@/components/icons"
+import ConnectWallet from "@/components/connect-wallet"
 import { NJLogo } from "@/components/nj-logo"
 import PresenceCounter from "@/components/presence-counter"
 import Link from "next/link"
@@ -24,9 +24,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
         </div>
         <div className="flex items-center gap-4">
           <PresenceCounter />
-          <div className="px-4 py-2 bg-white hover:bg-white/80 text-neutral-dark rounded-full font-bold">
-            <Link href="/">Connect Wallet</Link>
-          </div>
+          <ConnectWallet />
         </div>
       </header>
       <main>{children}</main>
