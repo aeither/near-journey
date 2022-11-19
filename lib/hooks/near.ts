@@ -5,11 +5,11 @@ import { useEffect, useMemo, useState } from "react"
 import { nanoid } from "nanoid"
 
 export function useNear() {
-  const NFT_EXAMPLES_ADDRESS = "nft.examples.testnet"
+  const NJ_RELIC_ADDRESS = "relic.testnet"
 
   const [isSigned, setIsSigned] = useState(false)
   const wallet = useMemo(
-    () => new Wallet({ createAccessKeyFor: NFT_EXAMPLES_ADDRESS }),
+    () => new Wallet({ createAccessKeyFor: NJ_RELIC_ADDRESS }),
     []
   )
 
@@ -29,8 +29,6 @@ export function useNear() {
   }
 
   const mintNFT = async (title: string) => {
-
-    
     const MEDIA = [
       "https://bafybeibdack2fgzxt54zvu5vncd6pvl4tlzj6vf7odqtodsa6vgucmrkia.ipfs.nftstorage.link/",
       "https://bafybeifirgr4cvvkx66xp7rz3j3wkk6owzcsxkjw4f2lblcjgkdfakk57u.ipfs.nftstorage.link/",
@@ -41,7 +39,7 @@ export function useNear() {
     const media = MEDIA[getRandomArbitrary(0, MEDIA.length - 1)]
 
     const tx = await wallet.callMethod({
-      contractId: NFT_EXAMPLES_ADDRESS,
+      contractId: NJ_RELIC_ADDRESS,
       method: "nft_mint",
       args: {
         token_id: nanoid(),
