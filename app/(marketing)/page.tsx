@@ -1,6 +1,6 @@
-import { Icons } from "@/components/icons"
-import Image from "next/image"
-import Link from "next/link"
+import { Icons } from "@/components/icons";
+import Image from "next/image";
+import Link from "next/link";
 
 export default async function IndexPage() {
   return (
@@ -206,6 +206,9 @@ export default async function IndexPage() {
               alt="NJ logo"
               priority
             />
+            <div className="text-xs uppercase text-gray-500 font-medium pt-2">
+              by Gio
+            </div>
           </div>
           <div className="p-5 w-48 ">
             <div className="text-xs uppercase text-gray-500 font-medium">
@@ -252,5 +255,5 @@ export default async function IndexPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

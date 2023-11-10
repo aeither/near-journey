@@ -3,6 +3,10 @@
 Learn to build on NEAR through practice.  
 Near Journey is an interactive website where builders can code along the guides and test their knowledge.
 
+## Demo
+
+http://near-journey.vercel.app/
+
 ## Running Locally
 
 1. Install dependencies using Yarn:
